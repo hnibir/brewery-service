@@ -139,3 +139,8 @@ Desktop.ini
 ######################
 .eslintcache
 /.idea/
+
+######################
+# Build files
+######################
+/target
