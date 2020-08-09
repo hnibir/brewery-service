@@ -37,4 +37,11 @@ public class CustomerController {
 
         return new ResponseEntity(headers, HttpStatus.CREATED);
     }
+
+    @PutMapping(value = {"/{customerId}"})
+    public ResponseEntity handleUpdate(@PathVariable("customerId") UUID custId, @RequestBody CustomerDto customerDto) {
+        customerService.updateCustomer(custId, customerDto);
+
+        return new ResponseEntity(HttpStatus.NO_CONTENT);
+    }
 }

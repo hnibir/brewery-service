@@ -28,4 +28,9 @@ public class CustomerServiceImpl implements CustomerService {
                 .lastName(("Mohammad"))
                 .build();
     }
+
+    @Override
+    public void updateCustomer(UUID custId, CustomerDto customerDto) {
+        // TODO implementation - would add a real implementation to update customer
+    }
 }
