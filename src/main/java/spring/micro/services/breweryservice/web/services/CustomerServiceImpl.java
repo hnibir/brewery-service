@@ -19,4 +19,13 @@ public class CustomerServiceImpl implements CustomerService {
                 .lastName("Hossain")
                 .build();
     }
+
+    @Override
+    public CustomerDto createNewCustomer(CustomerDto customerDto) {
+        return CustomerDto.builder()
+                .id(UUID.randomUUID())
+                .firstName("Sajib")
+                .lastName(("Mohammad"))
+                .build();
+    }
 }
