@@ -5,7 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import spring.micro.services.breweryservice.web.model.BeerDto;
-import spring.micro.services.breweryservice.web.services.BeerService;
+import spring.micro.services.breweryservice.services.BeerService;
 
 import java.util.UUID;
 

@@ -1,4 +1,4 @@
-package spring.micro.services.breweryservice.web.services;
+package spring.micro.services.breweryservice.services;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;

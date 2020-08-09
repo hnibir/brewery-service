@@ -1,4 +1,4 @@
-package spring.micro.services.breweryservice.web.services;
+package spring.micro.services.breweryservice.services;
 
 import spring.micro.services.breweryservice.web.model.CustomerDto;
 

@@ -15,7 +15,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import spring.micro.services.breweryservice.web.model.BeerDto;
-import spring.micro.services.breweryservice.web.services.BeerService;
+import spring.micro.services.breweryservice.services.BeerService;
 
 import java.util.UUID;
 
