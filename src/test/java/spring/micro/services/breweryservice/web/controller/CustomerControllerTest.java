@@ -22,7 +22,8 @@ import java.util.UUID;
 import static org.hamcrest.core.Is.is;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.mockito.BDDMockito.then;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @RunWith(SpringRunner.class)
@@ -56,5 +57,41 @@ public class CustomerControllerTest {
                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                .andExpect(jsonPath("$.firstName", is(validCustomer.getFirstName())))
                .andExpect(jsonPath("$.lastName", is(validCustomer.getLastName())));
+    }
+
+    @Test
+    public void handlePost() throws Exception {
+        // given
+        CustomerDto customerDto = validCustomer;
+        customerDto.setId(null);
+
+        CustomerDto savedCustomerDto = CustomerDto.builder()
+                .id(UUID.randomUUID())
+                .firstName("Nibir")
+                .lastName("Hossain")
+                .build();
+        String customerDtoJson = objectMapper.writeValueAsString(customerDto);
+
+        given(customerService.createNewCustomer(any())).willReturn(savedCustomerDto);
+
+        mockMvc.perform(post("/api/v1/customer/")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(customerDtoJson))
+                .andExpect(status().isCreated());
+    }
+
+    @Test
+    public void handleUpdate() throws Exception {
+        // given
+        CustomerDto customerDto = validCustomer;
+        String customerDtoJson = objectMapper.writeValueAsString(customerDto);
+
+        // when
+        mockMvc.perform(put("/api/v1/customer/" + UUID.randomUUID())
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(customerDtoJson))
+                .andExpect(status().isNoContent());
+
+        then(customerService).should().updateCustomer(any(), any());
     }
 }
