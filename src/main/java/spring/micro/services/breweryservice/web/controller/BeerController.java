@@ -9,6 +9,7 @@ import spring.micro.services.breweryservice.services.BeerService;
 
 import java.util.UUID;
 
+// @Deprecated
 @RestController
 @RequestMapping(value = "/api/v1/beer")
 public class BeerController {
