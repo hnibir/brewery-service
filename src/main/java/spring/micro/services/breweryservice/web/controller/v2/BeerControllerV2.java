@@ -9,6 +9,10 @@ import spring.micro.services.breweryservice.services.v2.BeerServiceV2;
 import spring.micro.services.breweryservice.web.model.BeerDto;
 import spring.micro.services.breweryservice.web.model.v2.BeerDtoV2;
 
+import javax.validation.ConstraintViolationException;
+import javax.validation.Valid;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -27,7 +31,7 @@ public class BeerControllerV2 {
     }
 
     @PostMapping // POST - create new beer
-    public ResponseEntity handlePost(@RequestBody BeerDtoV2 beerDto) {
+    public ResponseEntity handlePost(@Valid @RequestBody BeerDtoV2 beerDto) {
         BeerDtoV2 savedDto = beerServiceV2.createNewBeer(beerDto);
         HttpHeaders headers = new HttpHeaders();
         // TODO add hostname to URL
@@ -37,7 +41,7 @@ public class BeerControllerV2 {
     }
 
     @PutMapping(value = {"/{beerId}"})
-    public ResponseEntity handleUpdate(@PathVariable("beerId") UUID beerId, @RequestBody BeerDtoV2 beerDtoV2) {
+    public ResponseEntity handleUpdate(@PathVariable("beerId") UUID beerId, @Valid @RequestBody BeerDtoV2 beerDtoV2) {
         beerServiceV2.updateBeer(beerId, beerDtoV2);
 
         return new ResponseEntity(HttpStatus.NO_CONTENT);
@@ -47,5 +51,15 @@ public class BeerControllerV2 {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteBeer(@PathVariable("beerId") UUID beerId) {
         beerServiceV2.deleteBeerById(beerId);
+    }
+
+    @ExceptionHandler(ConstraintViolationException.class)
+    public ResponseEntity<List> validationErrorHandler(ConstraintViolationException cve) {
+        List<String> errors = new ArrayList<>(cve.getConstraintViolations().size());
+        cve.getConstraintViolations().forEach(constraintViolation -> {
+            errors.add(constraintViolation.getPropertyPath() + " : " + constraintViolation.getMessage());
+        });
+
+        return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
     }
 }

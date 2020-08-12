@@ -84,6 +84,7 @@ public class CustomerControllerTest {
     public void handleUpdate() throws Exception {
         // given
         CustomerDto customerDto = validCustomer;
+        customerDto.setId(null);
         String customerDtoJson = objectMapper.writeValueAsString(customerDto);
 
         // when
