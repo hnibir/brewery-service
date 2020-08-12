@@ -7,9 +7,10 @@ import org.springframework.web.bind.annotation.*;
 import spring.micro.services.breweryservice.web.model.BeerDto;
 import spring.micro.services.breweryservice.services.BeerService;
 
+import javax.validation.Valid;
 import java.util.UUID;
 
-// @Deprecated
+@Deprecated
 @RestController
 @RequestMapping(value = "/api/v1/beer")
 public class BeerController {
@@ -26,7 +27,7 @@ public class BeerController {
     }
 
     @PostMapping // POST - create new beer
-    public ResponseEntity handlePost(@RequestBody BeerDto beerDto) {
+    public ResponseEntity handlePost(@Valid @RequestBody BeerDto beerDto) {
         BeerDto savedDto = beerService.createNewBeer(beerDto);
         HttpHeaders headers = new HttpHeaders();
         // TODO add hostname to URL
@@ -36,7 +37,7 @@ public class BeerController {
     }
 
     @PutMapping(value = {"/{beerId}"})
-    public ResponseEntity handleUpdate(@PathVariable("beerId") UUID beerId, @RequestBody BeerDto beerDto) {
+    public ResponseEntity handleUpdate(@PathVariable("beerId") UUID beerId, @Valid @RequestBody BeerDto beerDto) {
         beerService.updateBeer(beerId, beerDto);
 
         return new ResponseEntity(HttpStatus.NO_CONTENT);
